@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<x-guest-layout>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <p class="text-black dark:text-white text-2xl">Check your license</p>
+    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href=" /login">
+        Enter
+    </a>
 
-    <title>V</title>
-
-</head>
-
-<body>
-    <h1>V</h1>
-    <p><a href="/register">Register</a></p>
-    <p><a href="/login">Login</a></p>
-</body>
-
-</html>
+</x-guest-layout>
