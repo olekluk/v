@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\VerifyController;
 
 
@@ -25,7 +26,9 @@ Route::get('/verify', [VerifyController::class, 'index'])->name('verify'); // ap
 
 Route::middleware('auth')->group(function () {
 
-    // Route::post('/deactivate', 'HomeController@deactivate')->name('deactivate');
+    Route::post('/info-search', [InfoController::class, 'search'])->name('info.search');
+    Route::get('/info-all', [InfoController::class, 'all'])->name('info.all');
+    Route::post('/deactivate', [InfoController::class, 'deactivate'])->name('deactivate');
 
 
     // Route::get('/test-db-connection', 'VerifyController@testDbConnection')->name('testdbconnection');

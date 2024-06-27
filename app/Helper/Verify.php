@@ -111,8 +111,7 @@ class Verify
         if (config('verify.cache_use') != "TRUE") {
             return false;
         }
-
-        Cache::put($lic, $url, now()->addHours(config('verify.cache_ttl')));
+        Cache::put($lic, $url, now()->addHours((int)config('verify.cache_ttl')));
     }
 
 

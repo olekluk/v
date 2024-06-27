@@ -89,6 +89,6 @@ return [
     |
     */
 
-    'cache_ttl' => env('VERIFY_CACHE_TTL', '168'),
+    'cache_ttl' => env('VERIFY_CACHE_TTL', 168),
 
 ];
