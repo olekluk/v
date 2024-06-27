@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InfoController;
+use App\Http\Controllers\LocalLicenseController;
 use App\Http\Controllers\VerifyController;
 
 
@@ -30,15 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/info-all', [InfoController::class, 'all'])->name('info.all');
     Route::post('/deactivate', [InfoController::class, 'deactivate'])->name('deactivate');
 
-
-    // Route::get('/test-db-connection', 'VerifyController@testDbConnection')->name('testdbconnection');
-
-    // Route::get('/addforms', 'LocalLicenseController@addforms')->name('local.form');
-    // Route::post('/addlocalcode', 'LocalLicenseController@addlocalcode')->name('local.add');
-    // Route::get('/viewlocalcode', 'LocalLicenseController@viewlocalcode')->name('local.view');
-
-    // Route::post('/addteststore', 'TestStoreController@addteststore')->name('test.add');
-    // Route::get('/viewteststore', 'TestStoreController@viewteststore')->name('test.view');
+    Route::get('/local', [LocalLicenseController::class, 'index'])->name('local.index');
+    Route::post('/local-add', [LocalLicenseController::class, 'add'])->name('local.add');
+    Route::post('/local-delete', [LocalLicenseController::class, 'delete'])->name('local.delete');
 
     // Route::get('/skinstats', 'StatsController@skinstats')->name('stats.skin');
     // Route::get('/salepercustomer', 'StatsController@salepercustomer')->name('stats.sales');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\Verify;
 use Illuminate\Http\Request;
 use App\Models\Store;
+use Illuminate\Support\Facades\Cache;
 
 class InfoController extends Controller
 {
@@ -65,6 +66,7 @@ class InfoController extends Controller
 
         // Deactivate the store with the provided license key
         $storeModel::where('lic', $lic)->update(['active' => 0]);
+        Cache::forget($lic);
 
         // Retrieve the updated store information
         $stores = $storeModel::where('lic', $lic)->paginate(15);

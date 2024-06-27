@@ -3,33 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\License;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\License;
+use App\Models\Theme;
 
 class LocalLicenseController extends Controller
 {
+
     /**
-     * Create a new controller instance.
+     * Display the add form and list all local codes form.
      *
-     * @return void
+     * @param  \App\Models\Theme  $themeModel
+     * @return \Illuminate\Contracts\View\View
      */
-    public function __construct()
+    public function index(Theme $themeModel, License $license)
     {
-        $this->middleware('auth');
+        $licenses = $license->paginate(100);
+        $themes = $themeModel->get();
+        return view('local', ['themes' => $themes, 'codes' => $licenses, 'message' => '']);
     }
 
-    public function addforms() {
-        return view('addforms')->withData('');
-    }
 
-    public function addlocalcode(Request $request, License $license) {
-        if(strlen($request->input('lic')) > 0 ) {
+
+    /**
+     * Add a new local license.
+     *
+     * @param  Request  $request
+     * @param  License  $license
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function add(Request $request, License $license)
+    {
+        var_dump($request->input('themeid'));
+        if (strlen($request->input('lic')) > 0) {
             $lic = trim($request->input('lic'));
         } else {
-            return view('addforms')->withData('Error! Empty code!');
+            return view('local', ['message' => 'Error! Empty code!']);
         }
 
         if (License::where('lic', '=', $lic)->exists()) {
-            // user found
+            // local code already exists
             $message = "Error. The local license is already exist. Use a unique text string.";
         } else {
             $license->lic = $lic;
@@ -42,17 +55,21 @@ class LocalLicenseController extends Controller
             $message = 'Done. The local purchase code added. Code - ' . $lic . '';
         }
 
-        return view('addforms')->withData($message);
+        return Redirect::route('local.index')->with('message', $message);
     }
 
-    public function viewlocalcode(License $license, Request $request) {
-        if ($request->input('action') == 'delete') {
-            $license->findOrFail($request->input('id'))->delete();
-        }
 
-        $codes = $license->get();
 
-        return view('viewlocalcode')->withData($codes);
+    /**
+     * Delete a local code.
+     *
+     * @param  Request  $request
+     * @param  License  $license
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Request $request, License $license)
+    {
+        $license->findOrFail($request->input('id'))->delete();
+        return Redirect::route('local.index')->with('message', "Local code deleted.");
     }
-
 }
