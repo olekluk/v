@@ -21,6 +21,11 @@
                         {{ __('Local codes') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('stats.skin')" :active="request()->routeIs('stats.skin')">
+                        {{ __('Skin stats') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -76,6 +81,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('local.index')" :active="request()->routeIs('local.index')">
                 {{ __('Local codes') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('stats.skin')" :active="request()->routeIs('stats.skin')">
+                {{ __('Skin stats') }}
             </x-responsive-nav-link>
         </div>
 

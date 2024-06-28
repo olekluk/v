@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\LocalLicenseController;
 use App\Http\Controllers\VerifyController;
+use App\Http\Controllers\StatsController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -22,11 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/verify', [VerifyController::class, 'index'])->name('verify'); // api for theme
-// Route::get('/check', 'VerifyController@check')->name('check'); // ????? don't understand why it needs. remove it?
+Route::get('/verify', [VerifyController::class, 'index'])->name('verify');
 
 Route::middleware('auth')->group(function () {
-
     Route::post('/info-search', [InfoController::class, 'search'])->name('info.search');
     Route::get('/info-all', [InfoController::class, 'all'])->name('info.all');
     Route::post('/deactivate', [InfoController::class, 'deactivate'])->name('deactivate');
@@ -35,8 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/local-add', [LocalLicenseController::class, 'add'])->name('local.add');
     Route::post('/local-delete', [LocalLicenseController::class, 'delete'])->name('local.delete');
 
-    // Route::get('/skinstats', 'StatsController@skinstats')->name('stats.skin');
-    // Route::get('/salepercustomer', 'StatsController@salepercustomer')->name('stats.sales');
+    Route::get('/stats-skin', [StatsController::class, 'skin'])->name('stats.skin');
+    Route::get('/stats-sales', [StatsController::class, 'sales'])->name('stats.sales');
 });
 
 require __DIR__ . '/auth.php';

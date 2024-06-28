@@ -6,40 +6,45 @@ use Illuminate\Support\Facades\DB;
 
 class StatsController extends Controller
 {
+
     /**
-     * Create a new controller instance.
+     * Retrieve skin statistics.
      *
-     * @return void
+     * This method retrieves skin statistics from the 'stores' table in the database.
+     * It selects the 'themeName' column and counts the number of occurrences for each theme.
+     * The results are grouped by theme name, filtered by active stores, and ordered by the total count in descending order.
+     * The paginated results are then passed to the 'stats/skin' view.
+     *
+     * @return \Illuminate\Contracts\View\View
      */
-    public function __construct()
+    public function skin()
     {
-        $this->middleware('auth');
-    }
-
-    public function skinstats() {
-
         $data = DB::table('stores')
             ->select('themeName', DB::raw('count(*) as total'))
             ->groupBy('themeName')
             ->where('active', 1)
-            ->orderBy('total', 'DESC'   )
-            ->get();
+            ->orderBy('total', 'DESC')
+            ->paginate(1000);
 
-        return view('stats/skinstats')->withData($data);
+        return view('stats/skin', ['data' => $data]);
     }
 
-    public function salepercustomer() {
 
+
+    /**
+     * Retrieve sales data from the database and display it in the sales view.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function sales()
+    {
         $data = DB::table('stores')
             ->select('customer', DB::raw('count(*) as total'))
             ->groupBy('customer')
             ->where('active', 1)
-//            ->where('total', '>=', 2)
-            ->orderBy('total', 'DESC'   )
-            ->get();
+            ->orderBy('total', 'DESC')
+            ->paginate(1000);
 
-        return view('stats/salepercustomer')->withData($data);
-
+        return view('stats/sales', ['data' => $data]);
     }
-
 }
