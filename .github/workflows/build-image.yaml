@@ -20,12 +20,13 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          password: fff
+          #${{secrets.GITHUB_TOKEN}}
 
-      - name: Build & Push
-        env:
-          REGISTRY: ghcr.io/${{github.actor}}
-        run: make image
+      # - name: Build & Push
+      #   env:
+      #     REGISTRY: ghcr.io/${{github.actor}}
+      #   run: make image
 
   # cd:
   #   name: CD
