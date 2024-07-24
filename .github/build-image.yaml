@@ -24,11 +24,8 @@ jobs:
 
       - name: Build & Push
         env:
-          APP: "kbot"
           REGISTRY: ghcr.io/${{github.actor}}
-          TARGETARCH: "amd64"
-          TARGETOS: "linux"
-        run: make image push
+        run: make image
 
   # cd:
   #   name: CD
