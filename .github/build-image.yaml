@@ -1,4 +1,4 @@
-name: v-ci-cd
+name: cicd
 
 on:
   # push:
