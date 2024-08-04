@@ -1,0 +1,75 @@
+# Default values for v.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/olekluk/v
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.0.5-538c89e"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+configmap:
+  name: "v-config"
+  data:
+    app_name: "verify"
+    app_env: "local"
+    app_key: "base64:="
+    app_debug: "false"
+    app_timezone: "utc"
+    app_url: ""
+    app_locale: "en"
+    app_fallback_locale: "en"
+    app_faker_locale: "en_us"
+    app_maintenance_driver: "file"
+    app_maintenance_store: "database"
+    bcrypt_rounds: "12"
+    log_channel: "stdout"
+    log_stack: "single"
+    log_deprecations_channel: "null"
+    log_level: "debug"
+    db_connection: "mysql"
+    db_host: "mysql"
+    db_port: "3306"
+    db_database: ""
+    db_username: ""
+    db_password: ""
+    session_driver: "redis"
+    session_lifetime: "120"
+    session_encrypt: "false"
+    session_path: "/"
+    session_domain: "null"
+    broadcast_connection: "log"
+    filesystem_disk: "local"
+    queue_connection: "database"
+    cache_store: "redis"
+    redis_client: "phpredis"
+    redis_host: ""
+    redis_password: ""
+    redis_port: "6379"
+    vite_app_name: "verify"
+    verify_target_theme_id: ""
+    verify_url: ""
+    verify_email: ""
+    verify_envato_api_endpoint: ""
+    verify_envato_api_token: ""
+    verify_cache_use: "true"
+    verify_cache_ttl: "168"
