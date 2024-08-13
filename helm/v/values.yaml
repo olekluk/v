@@ -7,7 +7,7 @@ image:
   repository: ghcr.io/olekluk/v
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1.0.11-70b9d79"
+  tag: "v1.0.11-87c28d5"
 service:
   type: ClusterIP
   port: 8080
