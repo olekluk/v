@@ -7,52 +7,63 @@ on:
   workflow_dispatch:
 
 jobs:
-  ci:
-    name: CI
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Docker login
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Build & Push
-        env:
-          REGISTRY: ghcr.io/${{github.actor}}
-        run: make image
-
-  # cd:
-  #   name: CD
-  #   needs: ci
+  # ci:
+  #   name: CI
   #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #     packages: write
 
   #   steps:
-  #     - uses: actions/checkout@v3
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
   #       with:
   #         fetch-depth: 0
-  #     - run: echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-  #     - uses: mikefarah/yq@master
+  #     - name: Docker login
+  #       uses: docker/login-action@v3
   #       with:
-  #         cmd: yq -i '.image.tag=strenv(VERSION)' helm/values.yaml
+  #         registry: ghcr.io
+  #         username: ${{github.actor}}
+  #         password: ${{secrets.GITHUB_TOKEN}}
 
-  #     - uses: mikefarah/yq@master
-  #       with:
-  #         cmd: yq -i '.version=strenv(VERSION)' helm/Chart.yaml
+  #     - name: Build & Push
+  #       env:
+  #         REGISTRY: ghcr.io/${{github.actor}}
+  #       run: make image
 
-  #     - run: |
-  #         git config user.name github-actions
-  #         git config user.email github-actions@github.com
-  #         git commit -am "update version $VERSION"
-  #         git push
+  cd:
+    name: CD
+    # needs: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: echo "VERSION=$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.image.tag=strenv(VERSION)' helm/v/values.yaml
+
+      - uses: mikefarah/yq@master
+        with:
+          cmd: yq -i '.version=strenv(VERSION)' helm/v/Chart.yaml
+
+      - name: Install Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
+
+      - name: Package Helm Chart
+        run: |
+          cd helm
+          helm package ./v
+
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am "update version $VERSION"
+          git push
