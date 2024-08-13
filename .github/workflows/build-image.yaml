@@ -57,13 +57,14 @@ jobs:
       #     chmod 700 get_helm.sh
       #     ./get_helm.sh
 
-      # - name: Package Helm Chart
-      #   run: |
-      #     cd helm
-      #     helm package ./v
+      - name: Package Helm Chart
+        run: |
+          cd helm
+          helm package ./v
 
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git add helm/* 
           git commit -am "update version $VERSION"
           git push
