@@ -35,3 +35,4 @@ Set your account token with `export TF_VAR_hcloud_token=xxxxxxxxxxxx`
 3) Update the terraform config to use a new app version and run the `terraform apply` command
 
 
+# v1.0.12 - Aug 19
