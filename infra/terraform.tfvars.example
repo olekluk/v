@@ -1,0 +1,25 @@
+ssh_public_key  = "/path/to/pub/key"
+ssh_private_key = "/path/to/private/key"
+
+mysql_root_password = "xxx"
+mysql_user_name     = "dbuser"
+mysql_user_password = "xxx"
+mysql_database_name = "dbname"
+
+redis_password = "xxx"
+
+app_cert_email = "email@brand.com"
+app_domain = "brand.com"
+app_key = "xxx"
+app_url = "https://brand.com"
+app_asseturl = "https://brand.com"
+app_name = "theVapp"
+
+app_theme_id = "999"
+
+app_support_url = "supporturl"
+app_support_email = "supportemail"
+app_envato_api_endpoint = "https://api.envato.com/v3/market/"
+app_envato_api_token = "xxx"
+app_cache_use = "true"
+app_cache_ttl = "168"

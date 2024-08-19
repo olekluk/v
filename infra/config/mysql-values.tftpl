@@ -1,0 +1,13 @@
+auth:
+  rootPassword: ${root_password}
+  database: "${database_name}"
+  username: "${user_name}"
+  password: "${user_password}"
+primary:
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 500m
+    limits:
+      memory: 4Gi
+      cpu: 2000m

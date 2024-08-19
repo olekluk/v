@@ -1,0 +1,66 @@
+clusterissuer:
+  name: "letsencrypt-prod"
+  server: "https://acme-v02.api.letsencrypt.org/directory"
+  email: "${cert_email}"
+  secretName: "letsencrypt-prod"
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  tls:
+    - hosts:
+        - "${domain}"
+      secretName: letsencrypt-prod
+  hosts:
+    - host: ${domain}
+      paths:
+        - path: /
+          pathType: Prefix
+
+configmap:
+  name: "v-config"
+  data:
+    app_name: "${name}"
+    app_env: "production"
+    app_key: "${key}"
+    app_debug: "false"
+    app_timezone: "utc"
+    app_url: "${url}"
+    asset_url: "${asseturl}"
+    app_locale: "en"
+    app_fallback_locale: "en"
+    app_faker_locale: "en_us"
+    app_maintenance_driver: "file"
+    app_maintenance_store: "database"
+    bcrypt_rounds: "12"
+    log_channel: "stdout"
+    log_stack: "single"
+    log_deprecations_channel: "null"
+    log_level: "debug"
+    db_connection: "mysql"
+    db_host: "mysql"
+    db_port: "3306"
+    db_database: "${mysql_database_name}"
+    db_username: "${mysql_user_name}"
+    db_password: "${mysql_user_password}"
+    session_driver: "redis"
+    session_lifetime: "120"
+    session_encrypt: "false"
+    session_path: "/"
+    session_domain: "null"
+    broadcast_connection: "log"
+    filesystem_disk: "local"
+    queue_connection: "database"
+    cache_store: "redis"
+    redis_client: "phpredis"
+    redis_host: "redis-master"
+    redis_password: "${redis_password}"
+    redis_port: "6379"
+    vite_app_name: "${name}"
+    verify_target_theme_id: "${theme_id}"
+    verify_url: "${support_url}"
+    verify_email: "${support_email}"
+    verify_envato_api_endpoint: "${envato_api_endpoint}"
+    verify_envato_api_token: "${envato_api_token}"
+    verify_cache_use: "${cache_use}"
+    verify_cache_ttl: "${cache_ttl}"
